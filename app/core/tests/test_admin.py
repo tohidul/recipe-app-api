@@ -30,7 +30,7 @@ class AdminSiteTests(TestCase):
         res = self.client.get(url)
 
         self.assertContains(res, self.user.name)
-        self.assertContains(res, self.user.email)   
+        self.assertContains(res, self.user.email)
 
     def test_edit_user_page(self):
         """Test that the edit user page works"""

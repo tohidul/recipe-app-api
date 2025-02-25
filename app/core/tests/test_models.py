@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 
 from core import models
 
+
 class ModelTests(TestCase):
     """Test models"""
 
@@ -36,7 +37,7 @@ class ModelTests(TestCase):
             user = get_user_model().objects.create_user(email, 'test123')
 
             self.assertEqual(user.email, expected)
-    
+
     def test_new_user_without_email(self):
         """Test creating user without email raises error"""
         with self.assertRaises(ValueError):
@@ -65,6 +66,5 @@ class ModelTests(TestCase):
             price=Decimal(5.00),
             description='This is a test description',
         )
-       
 
         self.assertEqual(str(recipe), recipe.title)

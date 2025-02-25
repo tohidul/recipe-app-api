@@ -21,9 +21,11 @@ from recipe.serializers import (
 
 RECIPES_URL = reverse('recipe:recipe-list')
 
+
 def detail_url(recipe_id):
     """Return recipe detail URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
+
 
 def create_recipe(user, **params):
     """Create and return a new recipe."""
@@ -35,10 +37,11 @@ def create_recipe(user, **params):
         'description': 'Sample description',
         'link': 'https://sample.com',
     }
-    
+
     defaults.update(params)
 
     return Recipe.objects.create(user=user, **defaults)
+
 
 def create_user(**params):
     """Create and return a new user."""
@@ -87,9 +90,6 @@ class PrivateRecipeAPITests(TestCase):
 
         res = self.client.get(RECIPES_URL)
 
-        recipes = Recipe.objects.filter(user=self.user)
-        serializer = RecipeSerializer(recipes, many=True)
-
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
 
@@ -124,7 +124,11 @@ class PrivateRecipeAPITests(TestCase):
     def test_partial_update(self):
         """Test updating a recipe with patch."""
         original_link = 'https://sample.com/recipe.pdf'
-        recipe = create_recipe(user=self.user, title='Original title', link=original_link)
+        recipe = create_recipe(
+            user=self.user,
+            title='Original title',
+            link=original_link
+        )
         new_title = 'New title'
         payload = {'title': new_title}
         url = detail_url(recipe.id)
