@@ -455,7 +455,7 @@ class ImageUploadTests(TestCase):
         self.recipe = create_recipe(user=self.user)
 
     def tearDown(self):
-        return self.recipe.image.delete()
+        self.recipe.image.delete()
 
     def test_upload_image(self):
         """Test uploading an image to a recipe"""
@@ -466,7 +466,7 @@ class ImageUploadTests(TestCase):
             image_file.seek(0)
             payload = {'image': image_file}
             res = self.client.post(url, payload, format='multipart')
-        
+
         self.recipe.refresh_from_db()
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn('image', res.data)
